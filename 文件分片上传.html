@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/spark-md5/3.0.2/spark-md5.min.js"></script>
+  <input type="file" />
+  <button onclick="uploadHandle()">上传</button>
+  <script>
+    const inputFile = document.querySelector("input[type=file]");
+    inputFile.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      const chunks = createChunks(file, 10 * 1024 * 1024);
+      // 增量算法计算文件hash
+      const hash = getFileHash(chunks);
+      console.log(hash);
+    });
+
+    function uploadHandle() {
+      console.log("inputFile", inputFile.files[0]);
+    }
+
+    function createChunks(file, chunkSize) {
+      const chunks = [];
+      for (let i = 0; i < file.size; i += chunkSize) {
+        chunks.push(file.slice(i, i + chunkSize));
+      }
+      return chunks;
+    }
+
+    function getFileHash(chunks) {
+      function _read(i) {
+        if (i > chunks.length) {
+          return;
+        }
+      }
+      _read(0);
+    }
+  </script>
+  <body></body>
+</html>
